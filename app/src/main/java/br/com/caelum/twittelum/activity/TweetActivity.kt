@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import br.com.caelum.twittelum.R
+import br.com.caelum.twittelum.modelo.Tweet
 
 class TweetActivity : AppCompatActivity() {
 
@@ -23,10 +24,13 @@ class TweetActivity : AppCompatActivity() {
 
     private fun publicaTweet() {
         Log.i("TWEET", "botão clicado")
-        val campoTexto = findViewById<EditText>(R.id.tweet_mensagem)
 
+        val campoTexto = findViewById<EditText>(R.id.tweet_mensagem)
         val texto = campoTexto.text.toString()
-        Toast.makeText(this, texto,Toast.LENGTH_LONG).show()
+
+        val tweet = Tweet(texto)
+
+        Toast.makeText(this, "A mensagem é : $tweet",Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
