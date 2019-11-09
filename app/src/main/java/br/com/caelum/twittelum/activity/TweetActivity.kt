@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import br.com.caelum.twittelum.R
-import br.com.caelum.twittelum.bancodedados.CriadorDeBanco
+import br.com.caelum.twittelum.bancodedados.TweetDao
 import br.com.caelum.twittelum.bancodedados.TwittelumBD
 import br.com.caelum.twittelum.modelo.Tweet
 
@@ -29,9 +29,8 @@ class TweetActivity : AppCompatActivity() {
 
         val tweet = Tweet(texto)
 
-        val criadorDeBanco = CriadorDeBanco()
-        val banco = criadorDeBanco.criaBanco(this)
-        val tweetDao = banco.getTweetDao()
+        val banco : TwittelumBD = TwittelumBD.getInstance(this)
+        val tweetDao: TweetDao = banco.getTweetDao()
         tweetDao.salva(tweet)
 
 

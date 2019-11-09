@@ -8,4 +8,5 @@ import br.com.caelum.twittelum.modelo.Tweet
 interface TweetDao {
     @Insert
     fun salva(tweet: Tweet)
+
 }
