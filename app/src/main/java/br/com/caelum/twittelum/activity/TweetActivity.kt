@@ -1,16 +1,15 @@
 package br.com.caelum.twittelum.activity
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import br.com.caelum.twittelum.R
+import br.com.caelum.twittelum.bancodedados.CriadorDeBanco
+import br.com.caelum.twittelum.bancodedados.TwittelumBD
 import br.com.caelum.twittelum.modelo.Tweet
 
 class TweetActivity : AppCompatActivity() {
@@ -30,7 +29,13 @@ class TweetActivity : AppCompatActivity() {
 
         val tweet = Tweet(texto)
 
-        Toast.makeText(this, "A mensagem é : $tweet",Toast.LENGTH_LONG).show()
+        val criadorDeBanco = CriadorDeBanco()
+        val banco = criadorDeBanco.criaBanco(this)
+        val tweetDao = banco.getTweetDao()
+        tweetDao.salva(tweet)
+
+
+        Toast.makeText(this, "${tweet}",Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
