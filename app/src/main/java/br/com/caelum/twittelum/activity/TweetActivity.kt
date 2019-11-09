@@ -17,7 +17,7 @@ import br.com.caelum.twittelum.viewmodel.TweetViewModel
 import br.com.caelum.twittelum.viewmodel.ViewModelFactory
 
 class TweetActivity : AppCompatActivity() {
-    private val tweetViewModel: TweetViewModel by lazy { ViewModelProviders.of(this, ViewModelFactory())
+    private val tweetViewModel: TweetViewModel by lazy { ViewModelProviders.of(this, ViewModelFactory)
                                 .get(TweetViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

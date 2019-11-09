@@ -19,7 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_lista.*
 
 class ListaActivity : AppCompatActivity() {
-    private val tweetViewModel by lazy { ViewModelProviders.of(this, ViewModelFactory())
+    private val tweetViewModel by lazy { ViewModelProviders.of(this, ViewModelFactory)
         .get(TweetViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

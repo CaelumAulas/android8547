@@ -6,7 +6,7 @@ import br.com.caelum.twittelum.TwittelumApplication
 import br.com.caelum.twittelum.bancodedados.TwittelumBD
 import br.com.caelum.twittelum.repository.TweetRepository
 
-class ViewModelFactory: ViewModelProvider.Factory {
+object ViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         val twittelumBD = TwittelumBD.getInstance(TwittelumApplication.getInstance())
         val tweetDao = twittelumBD.getTweetDao()
