@@ -8,4 +8,6 @@ class TweetViewModel(private val tweetRepository: TweetRepository) : ViewModel()
     fun salva(tweet: Tweet) = tweetRepository.salva(tweet)
 
     fun lista() = tweetRepository.lista()
+
+    fun deleta(tweet: Tweet) = tweetRepository.deleta(tweet)
 }

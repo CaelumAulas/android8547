@@ -1,10 +1,13 @@
 package br.com.caelum.twittelum.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -35,6 +38,31 @@ class ListaActivity : AppCompatActivity() {
             //Snackbar.make(it, "Botão clicado", Snackbar.LENGTH_SHORT).show()
         }
 
+        val listener = AdapterView.OnItemLongClickListener {
+            adapter, item, posicao, id ->
+
+            //pega tweet
+            val tweet: Tweet = adapter.getItemAtPosition(posicao) as Tweet
+            //deletar tweet
+            perguntaSeDeletaEsseTweet(tweet)
+
+            false
+        }
+        lista_tweets.onItemLongClickListener = listener
+
+    }
+
+    private fun perguntaSeDeletaEsseTweet(tweet: Tweet) {
+        val dialogBuilder = AlertDialog.Builder(this)
+        dialogBuilder.setMessage("Quer mesmo deletar?")
+        dialogBuilder.setTitle("Atenção")
+        dialogBuilder.setNegativeButton("NÃO", null)
+        dialogBuilder.setPositiveButton("SIM") {
+            _, _ ->
+            tweetViewModel.deleta(tweet)
+        }
+
+        dialogBuilder.show()
     }
 
     private fun observer(): Observer<List<Tweet>> {
