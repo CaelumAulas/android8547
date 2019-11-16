@@ -1,5 +1,6 @@
 package br.com.caelum.twittelum.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -29,6 +30,7 @@ import java.io.File
 class TweetActivity : AppCompatActivity() {
     private val tweetViewModel: TweetViewModel by lazy { ViewModelProviders.of(this, ViewModelFactory)
                                 .get(TweetViewModel::class.java) }
+    val CODIGO_CAMERA: Int = 123
     var caminhoDaFoto: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +40,14 @@ class TweetActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        if (caminhoDaFoto != null) {
-            carregaImagem()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            CODIGO_CAMERA -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    carregaImagem()
+                }
+            }
         }
     }
 
@@ -86,7 +91,7 @@ class TweetActivity : AppCompatActivity() {
                 val uri =
                     FileProvider.getUriForFile(this,"br.com.caelum.twittelum.fileprovider", arquivo)
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-                startActivity(intent)
+                startActivityForResult(intent, CODIGO_CAMERA)
             }
             android.R.id.home -> finish()
         }
