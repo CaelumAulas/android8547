@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -20,11 +21,13 @@ import androidx.lifecycle.ViewModelProviders
 import br.com.caelum.twittelum.R
 import br.com.caelum.twittelum.bancodedados.TweetDao
 import br.com.caelum.twittelum.bancodedados.TwittelumBD
+import br.com.caelum.twittelum.extensions.convertePraBase64
 import br.com.caelum.twittelum.modelo.Tweet
 import br.com.caelum.twittelum.repository.TweetRepository
 import br.com.caelum.twittelum.viewmodel.TweetViewModel
 import br.com.caelum.twittelum.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.activity_tweet.*
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 class TweetActivity : AppCompatActivity() {
@@ -56,6 +59,11 @@ class TweetActivity : AppCompatActivity() {
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
         tweet_foto.setImageBitmap(scaledBitmap)
         tweet_foto.scaleType = ImageView.ScaleType.FIT_XY
+
+        val fotoNaBase64 = scaledBitmap.convertePraBase64()
+
+        tweet_foto.tag = fotoNaBase64
+
     }
 
     private fun publicaTweet() {
@@ -64,7 +72,9 @@ class TweetActivity : AppCompatActivity() {
         val campoTexto = findViewById<EditText>(R.id.tweet_mensagem)
         val texto = campoTexto.text.toString()
 
-        val tweet = Tweet(texto)
+        val foto = tweet_foto.tag as String?
+
+        val tweet = Tweet(texto, foto)
 
         tweetViewModel.salva(tweet)
 
